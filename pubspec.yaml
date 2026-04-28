@@ -1,0 +1,38 @@
+name: harmony_player
+description: A modern, high-performance music player built with Flutter.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  provider: ^6.1.2
+  just_audio: ^0.9.36
+  audio_session: ^0.1.16
+  audio_service: ^0.18.15
+  youtube_explode_dart: ^3.0.5
+  http: ^1.2.0
+  path_provider: ^2.1.2
+  permission_handler: ^11.3.0
+  file_picker: ^8.0.0+1
+  flutter_media_metadata: ^1.0.0+1
+  webview_flutter: ^4.13.1
+  csv: ^8.0.0
+  url_launcher: ^6.3.2
+  wakelock_plus: ^1.2.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+
