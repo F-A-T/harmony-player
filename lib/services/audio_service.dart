@@ -130,7 +130,8 @@ class AudioService {
       if (song.thumbnailUrl.startsWith('http')) {
         artUri = Uri.parse(song.thumbnailUrl);
       } else if (File(song.thumbnailUrl).existsSync()) {
-        artUri = Uri.file(song.thumbnailUrl);
+        final cleanPath = song.thumbnailUrl.startsWith('/') ? song.thumbnailUrl.substring(1) : song.thumbnailUrl;
+        artUri = Uri.parse('content://com.example.harmony_player.fileprovider/root/$cleanPath');
       }
     }
 

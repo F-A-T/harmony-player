@@ -210,10 +210,10 @@ class _PlaylistsViewState extends State<PlaylistsView> {
               setModalState(() {});
             }
 
-            List<Song> songs =
-                paths.where((pPath) => File(pPath).existsSync()).map((path) {
-              final name = p.basenameWithoutExtension(path);
-              return Song.fromLocal(path, name, "");
+            final songs = paths.where((pPath) => File(pPath).existsSync()).map((path) {
+              final name = path.split('/').last.replaceAll(RegExp(r'\.(mp3|m4a)$'), '');
+              final thumbPath = path.replaceAll(RegExp(r'\.(mp3|m4a)$'), '.jpg');
+              return Song.fromLocal(path, name, thumbPath);
             }).toList();
 
             return Container(

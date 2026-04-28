@@ -36,7 +36,8 @@ class _LibraryViewState extends State<LibraryView> {
 
     final songs = files.map((file) {
       final name = p.basenameWithoutExtension(file.path);
-      return Song.fromLocal(file.path, name, "");
+      final thumbPath = file.path.replaceAll(RegExp(r'\.(mp3|m4a)$'), '.jpg');
+      return Song.fromLocal(file.path, name, thumbPath);
     }).toList();
 
     setState(() {
