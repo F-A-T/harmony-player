@@ -34,7 +34,7 @@ class PlaylistService {
     final playlists = await loadPlaylists();
     if (!playlists.containsKey(playlistName)) playlists[playlistName] = [];
     if (!playlists[playlistName]!.contains(songPath)) {
-      playlists[playlistName]!.add(songPath);
+      playlists[playlistName]!.insert(0, songPath);
       await savePlaylists(playlists);
     }
   }

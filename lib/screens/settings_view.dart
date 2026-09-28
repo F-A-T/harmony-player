@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/queue_provider.dart';
 import '../services/image_cache_service.dart';
+import '../services/logger_service.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -68,6 +69,53 @@ class SettingsView extends StatelessWidget {
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                                 backgroundColor: Colors.redAccent));
+                      },
+                    ),
+                    const Divider(color: Colors.white12, height: 1),
+                    ListTile(
+                      leading: const Icon(Icons.description_rounded,
+                          color: Colors.orangeAccent),
+                      title: const Text("Hata Kayıtları (Logs)",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15)),
+                      subtitle: const Text(
+                          "Uygulama hatalarını ve durumlarını görüntüleyin.",
+                          style: TextStyle(fontSize: 12, color: Colors.grey)),
+                      onTap: () async {
+                        final logs = await LoggerService().readLogs();
+                        if (context.mounted) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              backgroundColor: const Color(0xFF1E1E1E),
+                              title: const Text("Sistem Kayıtları",
+                                  style: TextStyle(color: Colors.white)),
+                              content: SingleChildScrollView(
+                                child: SelectableText(logs,
+                                    style: const TextStyle(
+                                        color: Colors.white70, fontSize: 12)),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    LoggerService().clearLogs();
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text("Loglar temizlendi!")));
+                                  },
+                                  child: const Text("Temizle",
+                                      style: TextStyle(color: Colors.redAccent)),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text("Kapat",
+                                      style: TextStyle(color: Color(0xFF1DB954))),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
                       },
                     ),
                   ],

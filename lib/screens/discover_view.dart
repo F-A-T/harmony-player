@@ -7,9 +7,29 @@ class DiscoverView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int dayOfWeek = DateTime.now().weekday;
+    final List<String> dailyMixKeywords = [
+      "Pazartesi Motive Müzik",
+      "Akustik Salı",
+      "Çarşamba Pop Hit",
+      "Perşembe Klasik",
+      "Cuma Parti Şarkıları",
+      "Cumartesi Dans",
+      "Pazar Chillout"
+    ];
+    final String todayMix = dailyMixKeywords[dayOfWeek - 1];
+
     return ListView(
       padding: const EdgeInsets.all(16).copyWith(bottom: 80),
       children: [
+        _buildCategory("Günün Karışımı (Daily Mix)", [
+          {
+            "t": todayMix,
+            "s": "Sana Özel Günlük",
+            "i": "https://picsum.photos/300?day=$dayOfWeek"
+          },
+        ]),
+        const SizedBox(height: 25),
         _buildCategory("Haftanın Poptrendleri", [
           {
             "t": "Türkçe Pop Müzik",

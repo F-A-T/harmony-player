@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/services.dart';
+import '../services/logger_service.dart';
 import '../services/youtube_service.dart';
 
 class DownloadService {
@@ -48,32 +49,44 @@ class DownloadService {
 
   Future<bool> downloadAudio(
       String videoId, String title, String thumbnailUrl) async {
-    try {
-      final path = await getDownloadDirectory();
-      final safeTitle = title.replaceAll(RegExp(r'[/\\|?*:"<>]'), '');
-      final downloadPath = '$path/$safeTitle.mp3';
+    final logger = LoggerService();
+    int retries = 3;
 
-      final file = File(downloadPath);
-      final imageFile = File('$path/$safeTitle.jpg');
+    for (int i = 0; i < retries; i++) {
+      try {
+        final path = await getDownloadDirectory();
+        final safeTitle = title.replaceAll(RegExp(r'[/\\|?*:"<>]'), '');
+        final downloadPath = '$path/$safeTitle.mp3';
 
-      if (await file.exists() && await file.length() > 500000) return true;
+        final file = File(downloadPath);
 
-      // Native Kotlin yt-dlp köprüsüne indirme emri gönderiyoruz (ffmpeg metaverilerini gömer)
-      final result = await _channel.invokeMethod(
-          'downloadAudio', {'videoId': videoId, 'downloadPath': downloadPath});
+        if (await file.exists() && await file.length() > 500000) return true;
 
-      // İndirme bittiğinde boyut kontrolü (0 byte koruması)
-      if (await file.length() < 10000) {
-        print("Hata: Dosya çok küçük (0 byte sorunu)");
-        if (await file.exists()) await file.delete();
-        return false;
+        await logger.log("İndirme denemesi ${i + 1}/$retries: $title");
+
+        final result = await _channel.invokeMethod(
+            'downloadAudio', {'videoId': videoId, 'downloadPath': downloadPath});
+
+        if (await file.exists() && await file.length() < 10000) {
+          await logger.log("İndirme hatası: Dosya çok küçük (0 byte) - $title", type: "ERROR");
+          await file.delete();
+          continue; // Retry
+        }
+
+        if (result == true) {
+          await logger.log("İndirme başarılı: $title", type: "SUCCESS");
+          return true;
+        } else {
+          await logger.log("Native Bridge false döndürdü - $title", type: "WARN");
+        }
+      } catch (e) {
+        await logger.log("İndirme hatası ($title): $e", type: "ERROR");
       }
-
-      return result == true;
-    } catch (e) {
-      print("İndirme sırasında hata oluştu: $e");
-      return false;
+      await Future.delayed(const Duration(seconds: 2)); // Wait before retry
     }
+    
+    await logger.log("Tüm indirme denemeleri başarısız oldu: $title", type: "CRITICAL");
+    return false;
   }
 
   void dispose() {}

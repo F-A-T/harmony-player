@@ -5,6 +5,8 @@ import '../models/song.dart';
 import '../main.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:flutter_media_metadata/flutter_media_metadata.dart';
+import 'package:path_provider/path_provider.dart';
 
 class MyAudioHandler extends as_service.BaseAudioHandler
     with as_service.QueueHandler, as_service.SeekHandler {
@@ -57,7 +59,15 @@ class MyAudioHandler extends as_service.BaseAudioHandler
   Future<void> seek(Duration position) => _player.seek(position);
 
   @override
-  Future<void> stop() => _player.stop();
+  Future<void> stop() async {
+    await _player.stop();
+    await super.stop();
+  }
+
+  @override
+  Future<void> onTaskRemoved() async {
+    await stop();
+  }
 
   @override
   Future<void> skipToNext() async => onNext?.call();
@@ -92,6 +102,7 @@ class AudioService {
           androidNotificationChannelId: 'com.harmony.player.channel.audio',
           androidNotificationChannelName: 'Harmony Player Oynatma',
           androidNotificationOngoing: true,
+          androidStopForegroundOnPause: true,
           androidNotificationIcon: 'drawable/ic_notification',
         ),
       );
@@ -124,14 +135,25 @@ class AudioService {
     ));
   }
 
-  void _updateMediaItem(Song song) {
+  Future<void> _updateMediaItem(Song song) async {
     Uri? artUri;
     if (song.thumbnailUrl.isNotEmpty) {
       if (song.thumbnailUrl.startsWith('http')) {
         artUri = Uri.parse(song.thumbnailUrl);
       } else if (File(song.thumbnailUrl).existsSync()) {
-        final cleanPath = song.thumbnailUrl.startsWith('/') ? song.thumbnailUrl.substring(1) : song.thumbnailUrl;
-        artUri = Uri.parse('content://com.example.harmony_player.fileprovider/root/$cleanPath');
+        artUri = Uri.file(song.thumbnailUrl);
+      } else if (song.isLocal) {
+        try {
+          final metadata = await MetadataRetriever.fromFile(File(song.id));
+          if (metadata.albumArt != null) {
+            final tempDir = await getTemporaryDirectory();
+            final tempFile = File('${tempDir.path}/thumb_${song.id.hashCode}.jpg');
+            if (!tempFile.existsSync()) {
+              await tempFile.writeAsBytes(metadata.albumArt!);
+            }
+            artUri = Uri.file(tempFile.path);
+          }
+        } catch (_) {}
       }
     }
 
@@ -148,7 +170,7 @@ class AudioService {
 
   Future<void> playStream(String uri, Song song) async {
     try {
-      _updateMediaItem(song);
+      await _updateMediaItem(song);
       await _player.setAudioSource(AudioSource.uri(
         Uri.parse(uri),
       ));
@@ -161,7 +183,7 @@ class AudioService {
 
   Future<void> playLocalFile(Song song) async {
     try {
-      _updateMediaItem(song);
+      await _updateMediaItem(song);
       await _player.setAudioSource(AudioSource.uri(
         Uri.file(song.id),
       ));
@@ -177,5 +199,21 @@ class AudioService {
   Future<void> seek(Duration position) => _player.seek(position);
   Future<void> stop() => _player.stop();
   Future<void> setLoopMode(LoopMode mode) => _player.setLoopMode(mode);
+
+  /// Mevcut oynatma konumunu döner (oturum kaydetmek için kullanılır)
+  Future<Duration> getCurrentPosition() async {
+    return _player.position;
+  }
+
+  /// Şarkıyı oynatmadan sadece hazırlar (oturum geri yükleme için)
+  Future<void> prepareLocalFile(Song song) async {
+    try {
+      await _updateMediaItem(song);
+      await _player.setAudioSource(AudioSource.uri(Uri.file(song.id)));
+    } catch (e) {
+      print("prepareLocalFile hatası: $e");
+    }
+  }
+
   Future<void> dispose() => _player.dispose();
 }

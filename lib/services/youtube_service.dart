@@ -81,9 +81,18 @@ class YoutubeService {
     try {
       final manifest =
           await _ytExplode.videos.streamsClient.getManifest(videoId);
-      final audioInfo = manifest.audioOnly.withHighestBitrate();
+      final audioStreams = manifest.audioOnly.toList();
+
+      // Mono ses sorununu önlemek için: Önce en yüksek bit hızlı stereo
+      // stream'i tercih et. Stereo stream'ler genellikle daha yüksek
+      // bit hızına sahip olduğundan withHighestBitrate() çoğunlukla
+      // stereo döndürür — ama bazı şarkılarda mono gelebilir.
+      // En güvenli seçim: en yüksek bit hızlı olan (genellikle stereo 128kbps+)
+      audioStreams.sort((a, b) => b.bitrate.compareTo(a.bitrate));
+      final audioInfo = audioStreams.first;
+
       if (audioInfo.url.toString().isNotEmpty) {
-        print("YoutubeExplode stream URL başarıyla alındı.");
+        print("YoutubeExplode stream URL başarıyla alındı (${audioInfo.bitrate}).");
         return audioInfo.url.toString();
       }
     } catch (e) {
