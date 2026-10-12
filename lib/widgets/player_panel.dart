@@ -21,7 +21,8 @@ class PlayerPanel extends StatelessWidget {
           context: context,
           isScrollControlled: true,
           useSafeArea: true,
-          backgroundColor: Colors.transparent,
+          backgroundColor: const Color(0xFF141416),
+          barrierColor: Colors.black.withOpacity(0.7),
           builder: (_) => const SizedBox(
             height: double.infinity,
             child: FullPlayerView(),
@@ -67,7 +68,7 @@ class PlayerPanel extends StatelessWidget {
                         minHeight: 2.5,
                         backgroundColor: Colors.white10,
                         valueColor: const AlwaysStoppedAnimation<Color>(
-                            Color(0xFF1DB954)),
+                            Color(0xFF8E24AA)),
                       ),
                     );
                   },
@@ -113,7 +114,7 @@ class PlayerPanel extends StatelessWidget {
                               : song.author,
                           style: TextStyle(
                               color: provider.isLoading
-                                  ? const Color(0xFF1DB954)
+                                  ? const Color(0xFF8E24AA)
                                   : Colors.white54,
                               fontSize: 11,
                               fontWeight: FontWeight.w500),
@@ -131,7 +132,7 @@ class PlayerPanel extends StatelessWidget {
                             width: 22,
                             height: 22,
                             child: CircularProgressIndicator(
-                                color: Color(0xFF1DB954), strokeWidth: 2))
+                                color: Color(0xFF8E24AA), strokeWidth: 2))
                         : Icon(
                             provider.isPlaying
                                 ? Icons.pause_rounded
@@ -177,7 +178,7 @@ class _MiniAlbumArt extends StatelessWidget {
         errorBuilder: (_, __, ___) => Container(
           color: const Color(0xFF2B2B2B),
           child: const Icon(Icons.music_note_rounded,
-              color: Color(0xFF1DB954), size: 24),
+              color: Color(0xFF8E24AA), size: 24),
         ),
       );
     }
@@ -196,7 +197,7 @@ class _MiniAlbumArt extends StatelessWidget {
         return Container(
             color: const Color(0xFF1E1E1E),
             child: const Icon(Icons.music_note_rounded,
-                color: Color(0xFF1DB954), size: 24));
+                color: Color(0xFF8E24AA), size: 24));
       },
     );
   }

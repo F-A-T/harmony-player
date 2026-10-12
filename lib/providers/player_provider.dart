@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'dart:io';
+import 'dart:async';
 
 class PlayerProvider with ChangeNotifier {
   final AudioService _audioService = AudioService();
@@ -51,6 +52,37 @@ class PlayerProvider with ChangeNotifier {
   bool get playlistIsShuffle => _playlistIsShuffle;
   AudioService get audioService => _audioService;
   YoutubeService get youtubeService => _youtubeService;
+
+  // ─── Uyku Zamanlayıcısı (Sleep Timer) ──────────────────────────────────────
+  Timer? _sleepTimer;
+  DateTime? _sleepTimerEndTime;
+
+  bool get hasActiveSleepTimer => _sleepTimer != null && _sleepTimer!.isActive;
+  Duration? get remainingSleepTime {
+    if (_sleepTimerEndTime == null || !hasActiveSleepTimer) return null;
+    final diff = _sleepTimerEndTime!.difference(DateTime.now());
+    return diff.isNegative ? Duration.zero : diff;
+  }
+
+  void pause() => _audioService.pause();
+  void play() => _audioService.play();
+
+  void startSleepTimer(Duration duration) {
+    cancelSleepTimer();
+    _sleepTimerEndTime = DateTime.now().add(duration);
+    _sleepTimer = Timer(duration, () {
+      _audioService.pause();
+      cancelSleepTimer();
+    });
+    notifyListeners();
+  }
+
+  void cancelSleepTimer() {
+    _sleepTimer?.cancel();
+    _sleepTimer = null;
+    _sleepTimerEndTime = null;
+    notifyListeners();
+  }
 
   PlayerProvider() {
     _initAudioService();
@@ -327,6 +359,7 @@ class PlayerProvider with ChangeNotifier {
   // ─── Dispose ────────────────────────────────────────────────────────────────
   @override
   void dispose() {
+    _sleepTimer?.cancel();
     WakelockPlus.disable();
     _audioService.dispose();
     _youtubeService.dispose();

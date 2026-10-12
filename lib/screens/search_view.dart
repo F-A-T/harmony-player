@@ -85,7 +85,7 @@ class SearchViewState extends State<SearchView> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
           content: Text("${song.title} kuyruğa eklendi."),
-          backgroundColor: const Color(0xFF1DB954),
+          backgroundColor: const Color(0xFF8E24AA),
           duration: const Duration(seconds: 1)),
     );
   }
@@ -109,7 +109,7 @@ class SearchViewState extends State<SearchView> {
                     child: const Text("İptal")),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1DB954)),
+                      backgroundColor: const Color(0xFF8E24AA)),
                   onPressed: () {
                     Navigator.pop(ctx);
                     performSearchFromOutside(tc.text);
@@ -240,7 +240,7 @@ class SearchViewState extends State<SearchView> {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(
                   "${itemsToQueue.length} şarkı dosyadan kuyruğa aktarıldı!"),
-              backgroundColor: const Color(0xFF1DB954)));
+              backgroundColor: const Color(0xFF8E24AA)));
           _showQueueDialog();
         } else {
           if (mounted)
@@ -323,7 +323,7 @@ class SearchViewState extends State<SearchView> {
                           localStatusLabel = "Zaten İndirilmiş (Atlandı)";
                         } else if (item.status == "completed") {
                           icon = Icons.check_circle;
-                          c = const Color(0xFF1DB954);
+                          c = const Color(0xFF8E24AA);
                           localStatusLabel = "Başarılı";
                         } else {
                           icon = Icons.error;
@@ -418,7 +418,7 @@ class SearchViewState extends State<SearchView> {
                     Icons.import_export,
                     "Exportify ile Spotify Çek",
                     "Bağlantıya giderek Spotify listelerini cihazınıza .csv olarak indirin.",
-                    const Color(0xFF1DB954), () async {
+                    const Color(0xFF8E24AA), () async {
                   final url = Uri.parse('https://exportify.net');
                   try {
                     await launchUrl(url, mode: LaunchMode.externalApplication);
@@ -433,7 +433,7 @@ class SearchViewState extends State<SearchView> {
                     Icons.file_upload,
                     "İnen Dosyayı Cihazdan Yükle",
                     "Exportify'dan indirdiğin .csv tablosunu yükle.",
-                    Colors.blueAccent,
+                    Colors.orangeAccent,
                     _importFromFile),
               ],
             ),
@@ -451,7 +451,7 @@ class SearchViewState extends State<SearchView> {
                 fillColor: const Color(0xFF1E1E1E),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25),
-                  borderSide: const BorderSide(color: Color(0xFF1DB954)),
+                  borderSide: const BorderSide(color: Color(0xFF8E24AA)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25),
@@ -460,7 +460,7 @@ class SearchViewState extends State<SearchView> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25),
                   borderSide:
-                      const BorderSide(color: Color(0xFF1DB954), width: 2),
+                      const BorderSide(color: Color(0xFF8E24AA), width: 2),
                 ),
                 suffixIcon: Row(mainAxisSize: MainAxisSize.min, children: [
                   IconButton(
@@ -469,7 +469,7 @@ class SearchViewState extends State<SearchView> {
                     onPressed: _showQueueDialog,
                   ),
                   IconButton(
-                    icon: const Icon(Icons.search, color: Color(0xFF1DB954)),
+                    icon: const Icon(Icons.search, color: Color(0xFF8E24AA)),
                     onPressed: () => _performSearch(_searchController.text),
                   ),
                 ]),
@@ -481,7 +481,7 @@ class SearchViewState extends State<SearchView> {
         if (_isSearching)
           const SliverFillRemaining(
               child: Center(
-                  child: CircularProgressIndicator(color: Color(0xFF1DB954))))
+                  child: CircularProgressIndicator(color: Color(0xFF8E24AA))))
         else
           SliverPadding(
               padding: const EdgeInsets.only(bottom: 80),
@@ -531,7 +531,7 @@ class SearchViewState extends State<SearchView> {
                         ),
                         IconButton(
                           icon: const Icon(Icons.play_circle_fill_rounded,
-                              color: Color(0xFF1DB954)),
+                              color: Color(0xFF8E24AA)),
                           tooltip: "Dinle (İndirmeden)",
                           onPressed: () {
                             provider
@@ -540,7 +540,7 @@ class SearchViewState extends State<SearchView> {
                         ),
                         IconButton(
                           icon: const Icon(Icons.download_rounded,
-                              color: Color(0xFF1DB954)),
+                              color: Color(0xFF8E24AA)),
                           tooltip: "Sıraya Ekle",
                           onPressed: () => _downloadSong(song),
                         ),

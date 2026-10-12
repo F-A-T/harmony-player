@@ -16,6 +16,12 @@ class MyAudioHandler extends as_service.BaseAudioHandler
 
   MyAudioHandler(this._player) {
     _player.playbackEventStream.listen(_broadcastState);
+    _player.durationStream.listen((duration) {
+      final currentItem = mediaItem.value;
+      if (currentItem != null && duration != null) {
+        mediaItem.add(currentItem.copyWith(duration: duration));
+      }
+    });
   }
 
   void _broadcastState(PlaybackEvent event) {
@@ -104,6 +110,7 @@ class AudioService {
           androidNotificationOngoing: true,
           androidStopForegroundOnPause: true,
           androidNotificationIcon: 'drawable/ic_notification',
+          androidShowNotificationBadge: true,
         ),
       );
       _isHandlerInitialized = true;
@@ -163,6 +170,7 @@ class AudioService {
         album: "Harmony Player",
         title: song.title,
         artist: song.author,
+        duration: song.duration,
         artUri: artUri,
       ));
     }

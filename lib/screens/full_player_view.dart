@@ -40,7 +40,7 @@ class FullPlayerView extends StatelessWidget {
                 ),
               ),
               Row(children: [
-                const Icon(Icons.lyrics_rounded, color: Color(0xFF1DB954)),
+                const Icon(Icons.lyrics_rounded, color: Color(0xFF8E24AA)),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -64,7 +64,7 @@ class FullPlayerView extends StatelessWidget {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
                           child: CircularProgressIndicator(
-                              color: Color(0xFF1DB954)));
+                              color: Color(0xFF8E24AA)));
                     } else if (snapshot.hasError || !snapshot.hasData) {
                       return const Center(
                           child: Text("Sözler yüklenemedi.",
@@ -102,10 +102,13 @@ class FullPlayerView extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFF141416),
       body: Stack(
         fit: StackFit.expand,
         children: [
+          // ── Taban Katman: Kesinlikle arka ekranı göstermeyen opak taban ─
+          Container(color: const Color(0xFF141416)),
+
           // ── Arka Plan: Kapak Resminin Bulanık Hali ──────────────────────
           _BlurredBackground(song: song),
 
@@ -116,9 +119,9 @@ class FullPlayerView extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Colors.black.withOpacity(0.3),
-                  Colors.black.withOpacity(0.7),
-                  Colors.black.withOpacity(0.9),
+                  const Color(0xFF141416).withOpacity(0.75),
+                  const Color(0xFF141416).withOpacity(0.85),
+                  const Color(0xFF141416).withOpacity(0.95),
                 ],
               ),
             ),
@@ -126,7 +129,7 @@ class FullPlayerView extends StatelessWidget {
 
           // ── İçerik ──────────────────────────────────────────────────────
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 8),
             child: Column(
               children: [
                 // ─ Üst Bar: Kapat butonu + Kaynak ─────────────────────
@@ -150,7 +153,7 @@ class FullPlayerView extends StatelessWidget {
                                   fontWeight: FontWeight.w600)),
                           Text(provider.currentSource,
                               style: const TextStyle(
-                                  color: Color(0xFF1DB954),
+                                  color: Color(0xFF8E24AA),
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold)),
                         ],
@@ -248,11 +251,11 @@ class FullPlayerView extends StatelessWidget {
                                       enabledThumbRadius: 6),
                                   overlayShape: const RoundSliderOverlayShape(
                                       overlayRadius: 14),
-                                  activeTrackColor: const Color(0xFF1DB954),
+                                  activeTrackColor: const Color(0xFF8E24AA),
                                   inactiveTrackColor: Colors.white24,
-                                  thumbColor: const Color(0xFF1DB954),
+                                  thumbColor: const Color(0xFF8E24AA),
                                   overlayColor:
-                                      const Color(0xFF1DB954).withOpacity(0.2),
+                                      const Color(0xFF8E24AA).withOpacity(0.2),
                                 ),
                                 child: Slider(
                                   value:
@@ -300,7 +303,7 @@ class FullPlayerView extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.shuffle_rounded,
                             color: provider.isShuffle
-                                ? const Color(0xFF1DB954)
+                                ? const Color(0xFF8E24AA)
                                 : Colors.white54,
                             size: 24),
                         onPressed: () =>
@@ -321,7 +324,7 @@ class FullPlayerView extends StatelessWidget {
                           height: 68,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(0xFF1DB954),
+                            color: Color(0xFF8E24AA),
                           ),
                           child: provider.isLoading
                               ? const Padding(
@@ -351,7 +354,7 @@ class FullPlayerView extends StatelessWidget {
                               : Icons.repeat_rounded,
                           color: provider.loopMode == LoopMode.off
                               ? Colors.white54
-                              : const Color(0xFF1DB954),
+                              : const Color(0xFF8E24AA),
                           size: 24,
                         ),
                         onPressed: () =>
@@ -459,7 +462,7 @@ class _AlbumArt extends StatelessWidget {
         errorBuilder: (_, __, ___) => Container(
           color: const Color(0xFF1E1E1E),
           child: const Icon(Icons.music_note_rounded,
-              color: Color(0xFF1DB954), size: 80),
+              color: Color(0xFF8E24AA), size: 80),
         ),
       );
     }
@@ -472,7 +475,7 @@ class _AlbumArt extends StatelessWidget {
         return Container(
           color: const Color(0xFF1E1E1E),
           child: const Icon(Icons.music_note_rounded,
-              color: Color(0xFF1DB954), size: 80),
+              color: Color(0xFF8E24AA), size: 80),
         );
       },
     );

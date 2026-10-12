@@ -29,3 +29,10 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+
+subprojects {
+    project.pluginManager.withPlugin("com.android.library") {
+        val androidExt = project.extensions.getByName("android") as com.android.build.gradle.LibraryExtension
+        androidExt.compileSdk = 36
+    }
+}

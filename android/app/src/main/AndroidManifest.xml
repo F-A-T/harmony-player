@@ -12,7 +12,7 @@
     <application
         android:label="harmony_player"
         android:name="${applicationName}"
-        android:extractNativeLibs="true"
+        
         android:icon="@mipmap/ic_launcher">
         
         <service android:name="com.ryanheise.audioservice.AudioService"

@@ -65,7 +65,7 @@ class _LibraryViewState extends State<LibraryView> {
 
     if (_isLoading) {
       return const Center(
-          child: CircularProgressIndicator(color: Color(0xFF1DB954)));
+          child: CircularProgressIndicator(color: Color(0xFF8E24AA)));
     }
 
     if (_localSongs.isEmpty) {
@@ -124,7 +124,7 @@ class _LibraryViewState extends State<LibraryView> {
                             : Icons.repeat),
                     color: provider.libraryLoopMode == LoopMode.off
                         ? const Color(0xFFB3B3B3)
-                        : const Color(0xFF1DB954),
+                        : const Color(0xFF8E24AA),
                   ),
                   onPressed: () => provider.toggleLoopMode("Kitaplık"),
                 ),
@@ -132,7 +132,7 @@ class _LibraryViewState extends State<LibraryView> {
                   icon: Icon(
                     Icons.shuffle,
                     color: provider.libraryIsShuffle
-                        ? const Color(0xFF1DB954)
+                        ? const Color(0xFF8E24AA)
                         : const Color(0xFFB3B3B3),
                   ),
                   onPressed: () => provider.toggleShuffle("Kitaplık"),
@@ -171,7 +171,7 @@ class _LibraryViewState extends State<LibraryView> {
 
             return RefreshIndicator(
               onRefresh: _loadLocalFiles,
-              color: const Color(0xFF1DB954),
+              color: const Color(0xFF8E24AA),
               child: ListView.builder(
                 padding: const EdgeInsets.only(bottom: 80),
                 itemCount: filteredSongs.length,
@@ -188,7 +188,7 @@ class _LibraryViewState extends State<LibraryView> {
                           : const Color(0xFF1E1E1E),
                       borderRadius: BorderRadius.circular(12),
                       border: isActive
-                          ? Border.all(color: const Color(0xFF1DB954), width: 1)
+                          ? Border.all(color: const Color(0xFF8E24AA), width: 1)
                           : null,
                     ),
                     child: ListTile(
@@ -216,7 +216,7 @@ class _LibraryViewState extends State<LibraryView> {
                                   color: const Color(0xFF1E1E1E),
                                   child: Icon(Icons.music_note,
                                       color: isActive
-                                          ? const Color(0xFF1DB954)
+                                          ? const Color(0xFF8E24AA)
                                           : const Color(0xFFB3B3B3),
                                       size: 30));
                             }),
@@ -234,7 +234,7 @@ class _LibraryViewState extends State<LibraryView> {
                         isActive ? "Oynatılıyor" : "Yerel Dosya",
                         style: TextStyle(
                             color: isActive
-                                ? const Color(0xFF1DB954)
+                                ? const Color(0xFF8E24AA)
                                 : const Color(0xFFB3B3B3),
                             fontSize: 11),
                       ),

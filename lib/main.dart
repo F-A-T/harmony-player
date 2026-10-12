@@ -34,14 +34,15 @@ class HarmonyPlayerApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           brightness: Brightness.dark,
-          scaffoldBackgroundColor: const Color(0xFF090909),
-          primaryColor: const Color(0xFF1DB954),
+          scaffoldBackgroundColor: const Color(0xFF141416),
+          primaryColor: const Color(0xFF8E24AA),
           colorScheme: const ColorScheme.dark(
-            primary: Color(0xFF1DB954),
-            surface: Color(0xFF121212),
+            primary: Color(0xFF8E24AA),
+            secondary: Color(0xFFFF9800),
+            surface: Color(0xFF1E1E24),
           ),
           appBarTheme: const AppBarTheme(
-            backgroundColor: Color(0xFF090909),
+            backgroundColor: Color(0xFF141416),
             elevation: 0,
           ),
           useMaterial3: true,

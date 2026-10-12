@@ -57,7 +57,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                     child: const Text("İptal")),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1DB954)),
+                      backgroundColor: const Color(0xFF8E24AA)),
                   onPressed: () async {
                     if (tc.text.isNotEmpty) {
                       await _playlistService.addSongToPlaylist(tc.text, "");
@@ -120,11 +120,11 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                             child: Text(
                                 allSelected ? "Seçimi Kaldır" : "Tümünü Seç",
                                 style:
-                                    const TextStyle(color: Color(0xFF1DB954))),
+                                    const TextStyle(color: Color(0xFF8E24AA))),
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF1DB954)),
+                                backgroundColor: const Color(0xFF8E24AA)),
                             onPressed: () async {
                               if (selectedPaths.isNotEmpty) {
                                 final pData =
@@ -158,7 +158,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                         final isSelected = selectedPaths.contains(file.path);
 
                         return CheckboxListTile(
-                          activeColor: const Color(0xFF1DB954),
+                          activeColor: const Color(0xFF8E24AA),
                           checkColor: Colors.white,
                           title: Text(name,
                               style: TextStyle(
@@ -243,7 +243,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                         height: 100,
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
-                              colors: [Color(0xFF1DB954), Color(0xFF116B31)],
+                              colors: [Color(0xFF8E24AA), Color(0xFF116B31)],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight),
                           borderRadius: BorderRadius.circular(8),
@@ -287,7 +287,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                         Row(children: [
                           ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF1DB954),
+                                backgroundColor: const Color(0xFF8E24AA),
                                 foregroundColor: Colors.black,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20))),
@@ -308,7 +308,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                             icon: const Icon(Icons.shuffle),
                             color: Provider.of<PlayerProvider>(context)
                                     .playlistIsShuffle
-                                ? const Color(0xFF1DB954)
+                                ? const Color(0xFF8E24AA)
                                 : const Color(0xFFB3B3B3),
                             onPressed: () => Provider.of<PlayerProvider>(
                                     context,
@@ -331,7 +331,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                                         .playlistLoopMode ==
                                     LoopMode.off
                                 ? const Color(0xFFB3B3B3)
-                                : const Color(0xFF1DB954),
+                                : const Color(0xFF8E24AA),
                             onPressed: () => Provider.of<PlayerProvider>(
                                     context,
                                     listen: false)
@@ -373,7 +373,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                           IconButton(
                             icon: Icon(isEditMode ? Icons.done : Icons.edit,
                                 color: isEditMode
-                                    ? const Color(0xFF1DB954)
+                                    ? const Color(0xFF8E24AA)
                                     : const Color(0xFFB3B3B3)),
                             tooltip: "Düzenle Modu",
                             onPressed: () {
@@ -419,17 +419,17 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                                     margin: const EdgeInsets.only(bottom: 8),
                                     decoration: BoxDecoration(
                                       color: isPlaying
-                                          ? const Color(0xFF1DB954)
+                                          ? const Color(0xFF8E24AA)
                                               .withOpacity(0.2)
                                           : (isEditMode &&
                                                   selectedIndexes.contains(i)
-                                              ? const Color(0xFF1DB954)
+                                              ? const Color(0xFF8E24AA)
                                                   .withOpacity(0.1)
                                               : Colors.transparent),
                                       borderRadius: BorderRadius.circular(8),
                                       border: isPlaying
                                           ? Border.all(
-                                              color: const Color(0xFF1DB954),
+                                              color: const Color(0xFF8E24AA),
                                               width: 1)
                                           : null,
                                     ),
@@ -478,7 +478,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                                                                   style: ElevatedButton.styleFrom(
                                                                       backgroundColor:
                                                                           const Color(
-                                                                              0xFF1DB954)),
+                                                                              0xFF8E24AA)),
                                                                   onPressed:
                                                                       () async {
                                                                     int?
@@ -541,7 +541,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                                                     value: selectedIndexes
                                                         .contains(i),
                                                     activeColor:
-                                                        const Color(0xFF1DB954),
+                                                        const Color(0xFF8E24AA),
                                                     onChanged: (val) {
                                                       setModalState(() {
                                                         if (val == true)
@@ -602,7 +602,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                                           style: TextStyle(
                                               fontWeight: FontWeight.w500,
                                               color: isPlaying
-                                                  ? const Color(0xFF1DB954)
+                                                  ? const Color(0xFF8E24AA)
                                                   : Colors.white)),
                                       trailing: isEditMode
                                           ? null
@@ -685,7 +685,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
   Widget build(BuildContext context) {
     if (_isLoading)
       return const Center(
-          child: CircularProgressIndicator(color: Color(0xFF1DB954)));
+          child: CircularProgressIndicator(color: Color(0xFF8E24AA)));
 
     return Scaffold(
       body: _playlists.isEmpty
@@ -694,7 +694,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                   style: TextStyle(color: Color(0xFFB3B3B3))))
           : RefreshIndicator(
               onRefresh: _loadData,
-              color: const Color(0xFF1DB954),
+              color: const Color(0xFF8E24AA),
               child: ListView.builder(
                   padding: const EdgeInsets.only(top: 10, bottom: 80),
                   itemCount: _playlists.length,
@@ -710,7 +710,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
                         ),
                         child: ListTile(
                           leading: const Icon(Icons.playlist_play,
-                              color: Color(0xFF1DB954), size: 30),
+                              color: Color(0xFF8E24AA), size: 30),
                           title: Text(pName,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
@@ -724,7 +724,7 @@ class _PlaylistsViewState extends State<PlaylistsView> {
         padding: const EdgeInsets.only(bottom: 50),
         child: FloatingActionButton(
           onPressed: _showCreateDialog,
-          backgroundColor: const Color(0xFF1DB954),
+          backgroundColor: const Color(0xFF8E24AA),
           child: const Icon(Icons.add, color: Colors.white),
         ),
       ),

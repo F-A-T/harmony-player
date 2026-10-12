@@ -37,7 +37,7 @@ class _WebViewScraperState extends State<WebViewScraper> {
               context.read<QueueProvider>().addMultipleToQueue(queueItems);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text("${queueItems.length} şarkı kuyruğa eklendi!"),
-                  backgroundColor: const Color(0xFF1DB954)));
+                  backgroundColor: const Color(0xFF8E24AA)));
               Navigator.pop(context); // Tarayıcıyı kapat
             } else {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -118,7 +118,7 @@ class _WebViewScraperState extends State<WebViewScraper> {
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1DB954),
+                  backgroundColor: const Color(0xFF8E24AA),
                   foregroundColor: Colors.black),
               icon: const Icon(Icons.download, size: 16),
               label: const Text("Ekranda Ne Varsa Çek",
